@@ -11,34 +11,40 @@ let python_highlight_all = 1
 call plug#begin()
 	Plug 'preservim/nerdtree'
 	Plug 'sickill/vim-monokai'
-	Plug 'dense-analysis/ale'
 	Plug 'vim-airline/vim-airline'
+	Plug 'tpope/vim-fugitive'
+	Plug 'junegunn/fzf.vim'
+	Plug 'voldikss/vim-floaterm'
+	Plug 'frazrepo/vim-rainbow'
+	Plug 'vim-airline/vim-airline-themes'
+	Plug 'tell-k/vim-autopep8'
 call plug#end() 
-let g:ale_linters = {
-			\ 'python': ['flake8', 'pylint']
-			\}
-nmap <F10> :ALEFix<CR>
-let g:ale_fix_on_save = 1
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
 
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? '✨ all good ✨' : printf(
-        \   '😞 %dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
-
-set statusline=
-set statusline+=%m
-set statusline+=\ %f
-set statusline+=%=
-set statusline+=\ %{LinterStatus()}
+" Airline settings
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
 
 colorscheme monokai
+
+" Fuzzy Finder
+let g:fzf_preview_window = 'right:50%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
+
+" Floaterm
+let g:floaterm_keymap_toggle = '<F12>'
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
+
+" Rainbow settings
+let g:rainbow_active = 1
+
+" Autopep
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+
+" Airline
+let g:airline_theme='wombat'
+
+" NERDTree
 filetype plugin indent on
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 nnoremap <C-J> <C-W><C-J>
@@ -46,14 +52,24 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-h>
 nmap <F6> :NERDTreeToggle<CR>
+
 " Removing all white spaces
 nnoremap <F7> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " Move line up/dowadsa
 nnoremap <silent> <M-k> :<C-u>silent! exe "move-2"<CR>==
 nnoremap <silent> <M-j> :<C-u>silent! exe "move+1"<CR>==
 inoremap <silent> <M-k> <ESC>:<C-u>silent! exe "move-2"<CR>==gi
 inoremap <silent> <M-j> <ESC>:<C-u>silent! exe "move+1"<CR>==gi
+
 " Move selected lins up/down
 xnoremap <silent> <M-k> :<C-u>silent! exe "'<,'>move-2"<CR>gv=gv
 xnoremap <silent> <M-j> :<C-u>silent! exe "'<,'>move'>+"<CR>gv=gv
-.vimrc
+
+" Run python code with F9
+autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+" Comment code with # and -#
+vnoremap <silent> # :s/^/#/<cr>:noh<cr>
+vnoremap <silent> -# :s/^#//<cr>:noh<cr>
