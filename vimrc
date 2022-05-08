@@ -7,6 +7,7 @@ set encoding=utf-8
 set clipboard=unnamed
 set cursorline
 set showmatch
+set spell
 let python_highlight_all = 1
 call plug#begin()
 	Plug 'preservim/nerdtree'
@@ -18,6 +19,9 @@ call plug#begin()
 	Plug 'frazrepo/vim-rainbow'
 	Plug 'vim-airline/vim-airline-themes'
 	Plug 'tell-k/vim-autopep8'
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	Plug 'preservim/tagbar'
+
 call plug#end() 
 
 " Airline settings
@@ -34,6 +38,9 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
 let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_width = 0.9
 let g:floaterm_height = 0.9
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " Rainbow settings
 let g:rainbow_active = 1
@@ -62,7 +69,7 @@ nnoremap <silent> <M-j> :<C-u>silent! exe "move+1"<CR>==
 inoremap <silent> <M-k> <ESC>:<C-u>silent! exe "move-2"<CR>==gi
 inoremap <silent> <M-j> <ESC>:<C-u>silent! exe "move+1"<CR>==gi
 
-" Move selected lins up/down
+" Move selected lines up/down
 xnoremap <silent> <M-k> :<C-u>silent! exe "'<,'>move-2"<CR>gv=gv
 xnoremap <silent> <M-j> :<C-u>silent! exe "'<,'>move'>+"<CR>gv=gv
 
@@ -73,3 +80,14 @@ autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python3' shellesca
 " Comment code with # and -#
 vnoremap <silent> # :s/^/#/<cr>:noh<cr>
 vnoremap <silent> -# :s/^#//<cr>:noh<cr>
+
+
+" Paste system clipboard with Ctrl + p
+inoremap <C-p> : <ESC>"+gPi
+vnoremap <C-p> : d"+gP<ESC>
+cnoremap <C-p> : <C-r>+
+
+" Copy to system clipboard with Ctr + c
+vnoremap <C-y> "+y
+nnoremap <C-y> "+yy
+inoremap <C-y> <ESC>"+yyi
