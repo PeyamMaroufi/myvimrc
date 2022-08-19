@@ -31,7 +31,6 @@ call plug#begin()
 	Plug 'sickill/vim-monokai'
 	Plug 'vim-airline/vim-airline'
 	Plug 'tpope/vim-fugitive'
-	Plug 'junegunn/fzf.vim'
 	Plug 'voldikss/vim-floaterm'
 	Plug 'frazrepo/vim-rainbow'
 	Plug 'vim-airline/vim-airline-themes'
