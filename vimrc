@@ -76,12 +76,10 @@ nmap <F6> :NERDTreeToggle<CR>
 nnoremap <F7> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 " Move line up/down
-execute "set <M-j>=\ej"
-execute "set <M-k>=\ek"
-nnoremap <silent> <M-k> :<C-u>silent! exe "move-2"<CR>==
-nnoremap <silent> <M-j> :<C-u>silent! exe "move+1"<CR>==
-inoremap <silent> <M-k> <ESC>:<C-u>silent! exe "move-2"<CR>==gi
-inoremap <silent> <M-j> <ESC>:<C-u>silent! exe "move+1"<CR>==gi
+nnoremap <S-Up> :m-2<CR>
+nnoremap <S-Down> :m+<CR>
+inoremap <S-Up> <Esc>:m-2<CR>
+inoremap <S-Down> <Esc>:m+<CR>
 
 " Move selected lines up/down
 xnoremap <silent> <M-k> :<C-u>silent! exe "'<,'>move-2"<CR>gv=gv
