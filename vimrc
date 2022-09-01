@@ -120,3 +120,4 @@ inoremap SS <Esc>S
 inoremap CC <Esc>C
 inoremap UU <Esc>u
 inoremap PP <Esc>pi
+inoremap DD <Esc>ddi
